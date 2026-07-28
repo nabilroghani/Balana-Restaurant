@@ -1,0 +1,143 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    color-scheme: light;
+    overflow-x: hidden;
+  }
+  
+  body {
+    background-color: #FFF8F0;
+    color: #3A1F1A;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  h1, h2, h3, h4, .font-serif {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    letter-spacing: 0.01em;
+  }
+
+  /* Ensure form inputs are readable on mobile */
+  input, select, textarea {
+    font-size: 16px !important; /* Prevents iOS zoom on focus */
+  }
+}
+
+/* Warm Inviting Glass & Card Utilities */
+.glass-panel {
+  background: rgba(255, 253, 249, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid #E8D5C4;
+}
+
+.glass-nav {
+  background: rgba(255, 248, 240, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(167, 38, 38, 0.15);
+}
+
+.glass-card {
+  background: #FFFFFF;
+  border: 1px solid #E8D5C4;
+  box-shadow: 0 10px 25px -5px rgba(58, 31, 26, 0.06);
+}
+
+/* Vibrant Terracotta Buttons */
+.btn-terracotta {
+  background: linear-gradient(135deg, #A72626, #C0392B);
+  color: #FFFFFF;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 20px -4px rgba(167, 38, 38, 0.35);
+}
+
+.btn-terracotta:hover {
+  background: linear-gradient(135deg, #B82C2C, #D63E2E);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px -4px rgba(167, 38, 38, 0.45);
+}
+
+.btn-terracotta:active {
+  transform: translateY(0) scale(0.97);
+}
+
+.btn-outline-warm {
+  background: transparent;
+  border: 1.5px solid #A72626;
+  color: #A72626;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-warm:hover {
+  background: #A72626;
+  color: #FFFFFF;
+}
+
+.btn-outline-warm:active {
+  transform: scale(0.97);
+}
+
+/* Hide scrollbar but allow scroll */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FFF8F0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #E8D5C4;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #A72626;
+}
+
+/* Mobile drawer animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fadeIn {
+  animation: fadeIn 0.25s ease-out;
+}
+
+/* Shimmer Loading animation */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, #FAF3E0 0%, #E8D5C4 50%, #FAF3E0 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* Safe area for notch phones */
+@supports (padding-top: env(safe-area-inset-top)) {
+  body {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
