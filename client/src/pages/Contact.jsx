@@ -26,47 +26,29 @@ export default function Contact() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setStatus({ loading: true, success: null, message: '' });
 
-    try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
+    // Build WhatsApp message from form data
+    const msg = `Assalam o Alaikum Balana Inn!%0A%0A*Name:* ${formData.name}%0A*Phone:* ${formData.phone}%0A*Visitor Type:* ${formData.travelerType}%0A%0A*Message:*%0A${formData.message}`;
+    const whatsappUrl = `https://wa.me/923002592213?text=${msg}`;
 
-      const data = await res.json();
+    // Open WhatsApp in new tab
+    window.open(whatsappUrl, '_blank');
 
-      if (res.ok && data.success) {
-        setStatus({
-          loading: false,
-          success: true,
-          message: data.message || 'Message submitted successfully!',
-        });
-        setFormData({
-          name: '',
-          phone: '',
-          email: '',
-          travelerType: 'Traveler (Chitral/Kumrat)',
-          message: '',
-        });
-      } else {
-        setStatus({
-          loading: false,
-          success: false,
-          message: data.message || 'Error submitting message.',
-        });
-      }
-    } catch (err) {
-      console.error('Contact Form Error:', err);
-      setStatus({
-        loading: false,
-        success: false,
-        message: 'Network error. Please try calling directly or messaging on WhatsApp.',
-      });
-    }
+    setStatus({
+      loading: false,
+      success: true,
+      message: 'Redirecting to WhatsApp! You can also call us directly at +92 300 2592213.',
+    });
+
+    setFormData({
+      name: '',
+      phone: '',
+      email: '',
+      travelerType: 'Traveler (Chitral/Kumrat)',
+      message: '',
+    });
   };
 
   return (

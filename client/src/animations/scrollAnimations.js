@@ -3,7 +3,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export const initVideoScrollExperience = (containerRef, heroSlidesRef) => {
+export const initVideoScrollExperience = (containerRef) => {
   // Clear any pre-existing ScrollTrigger instances to prevent duplication
   ScrollTrigger.getAll().forEach((t) => t.kill());
 
@@ -18,13 +18,12 @@ export const initVideoScrollExperience = (containerRef, heroSlidesRef) => {
       start: 'top top',
       end: isMobile ? '+=200%' : '+=300%',
       pin: true,
-      scrub: 1, // Smooth 1-second scrub lag for cinematic feel
+      scrub: 1,
       anticipatePin: 1,
     },
   });
 
-  // SCENE 1 -> SCENE 2 (0% -> 33% Scroll):
-  // Ken Burns zoom on Scene 1 background + reveal Scene 1 title text, then cross-fade to Scene 2 (Shinwari Karahi)
+  // SCENE 1 -> SCENE 2
   tl.to('.hero-scene-1-bg', {
     scale: 1.25,
     duration: 1,
@@ -52,8 +51,7 @@ export const initVideoScrollExperience = (containerRef, heroSlidesRef) => {
     ease: 'power2.out',
   }, 0.8);
 
-  // SCENE 2 -> SCENE 3 (33% -> 66% Scroll):
-  // Pan Scene 2 + fade out text, cross-fade to Scene 3 (Private Carpeted Family Cabins)
+  // SCENE 2 -> SCENE 3
   tl.to('.hero-scene-2-bg', {
     scale: 1.3,
     duration: 1,
@@ -81,8 +79,7 @@ export const initVideoScrollExperience = (containerRef, heroSlidesRef) => {
     ease: 'power2.out',
   }, 2.2);
 
-  // SCENE 3 -> SCENE 4 (66% -> 100% Scroll):
-  // Final light sweep & title zoom before un-pinning into page content
+  // SCENE 3 -> Final light sweep
   tl.to('.hero-light-sweep', {
     x: '200%',
     duration: 1.2,
@@ -94,30 +91,11 @@ export const initVideoScrollExperience = (containerRef, heroSlidesRef) => {
     duration: 1,
   }, 2.8);
 
-  // Normal Scroll Triggers for lower sections
-  gsap.from('.dish-card-anim', {
-    scrollTrigger: {
-      trigger: '.dishes-section',
-      start: 'top 80%',
-      toggleActions: 'play none none reverse',
-    },
-    opacity: 0,
-    y: 40,
-    duration: 0.8,
-    stagger: 0.2,
-    ease: 'power2.out',
-  });
+  // Refresh all ScrollTriggers after setup
+  ScrollTrigger.refresh();
+};
 
-  gsap.from('.facility-card-anim', {
-    scrollTrigger: {
-      trigger: '.facilities-section',
-      start: 'top 80%',
-    },
-    opacity: 0,
-    scale: 0.96,
-    y: 30,
-    duration: 0.6,
-    stagger: 0.15,
-    ease: 'back.out(1.2)',
-  });
+// Cleanup function for React component unmount
+export const cleanupScrollAnimations = () => {
+  ScrollTrigger.getAll().forEach((t) => t.kill());
 };

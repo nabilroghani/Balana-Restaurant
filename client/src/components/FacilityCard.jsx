@@ -13,7 +13,7 @@ export default function FacilityCard({ icon: Icon, title, tag, description, imag
   }, [image]);
 
   return (
-    <div className="facility-card-anim glass-card rounded-3xl p-6 relative overflow-hidden group hover:border-brand-terracotta transition-all duration-500 flex flex-col justify-between border border-brand-border bg-white shadow-card-warm">
+    <div className="glass-card rounded-3xl p-6 relative overflow-hidden group hover:border-brand-terracotta transition-all duration-500 flex flex-col justify-between border border-brand-border bg-white shadow-card-warm">
       {/* Background Accent Gradient */}
       <div className="absolute -right-10 -bottom-10 w-36 h-36 rounded-full bg-brand-terracotta/5 group-hover:bg-brand-terracotta/15 transition-all duration-500 blur-2xl" />
 

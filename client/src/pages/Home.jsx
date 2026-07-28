@@ -9,7 +9,7 @@ import {
   HiCheckCircle,
 } from 'react-icons/hi';
 import { FaRestroom, FaParking, FaCouch, FaMosque, FaUtensils, FaFire } from 'react-icons/fa';
-import { initVideoScrollExperience } from '../animations/scrollAnimations';
+import { initVideoScrollExperience, cleanupScrollAnimations } from '../animations/scrollAnimations';
 import { HERO_IMAGES, ALL_MENU_PRODUCTS } from '../assets';
 import ProductCard from '../components/ProductCard';
 import FacilityCard from '../components/FacilityCard';
@@ -20,26 +20,16 @@ export default function Home() {
   const [featuredProducts, setFeaturedProducts] = useState(ALL_MENU_PRODUCTS.slice(0, 3));
   const [selectedProduct, setSelectedProduct] = useState(null);
 
-  // useEffect(() => {
-  //   // Initialize GSAP Pinned Video Scrub Sequence
-  //   const timer = setTimeout(() => {
-  //     initVideoScrollExperience(heroContainerRef);
-  //   }, 150);
-
-  //   return () => clearTimeout(timer);
-  // }, []);
-
   useEffect(() => {
     const timer = setTimeout(() => {
       initVideoScrollExperience(heroContainerRef);
-
-      // GSAP ScrollTrigger ko refresh karein taake neeche wale cards hide na hon
-      if (window.ScrollTrigger) {
-        window.ScrollTrigger.refresh();
-      }
     }, 200);
 
-    return () => clearTimeout(timer);
+    // Cleanup: reset card styles & kill ScrollTriggers when navigating away
+    return () => {
+      clearTimeout(timer);
+      cleanupScrollAnimations();
+    };
   }, []);
 
   return (
@@ -191,12 +181,11 @@ export default function Home() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {featuredProducts.map((product) => (
-            <div key={product.id || product._id} className="dish-card-anim">
-              <ProductCard
-                product={product}
-                onSelect={(prod) => setSelectedProduct(prod)}
-              />
-            </div>
+            <ProductCard
+              key={product.id || product._id}
+              product={product}
+              onSelect={(prod) => setSelectedProduct(prod)}
+            />
           ))}
         </div>
 
